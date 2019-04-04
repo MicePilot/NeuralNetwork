@@ -1,0 +1,4 @@
+NN为神经网络的对象
+SGD为训练
+LoadNetworkStructure()为读取训练模型
+feedforward为识别
