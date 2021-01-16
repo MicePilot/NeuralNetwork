@@ -11,7 +11,7 @@ NeuralNetwork::NeuralNetwork(RowVector &layers, std::string cost,std::string fil
 	this->layers = layers;
 	this->num_layers = layers.getLength();
 	
-	//¹ÒÔØ´ú¼Ûº¯Êı
+	//æŒ‚è½½ä»£ä»·å‡½æ•°
 	if (cost == "CrossEntropy")
 	{
 		this->cost = &CrossEntropy;
@@ -25,22 +25,22 @@ NeuralNetwork::NeuralNetwork(RowVector &layers, std::string cost,std::string fil
 		throw ("NeuralNetwork Init Error!\nCost Function Error!\n");
 	}
 
-	if (fileName.empty())			//Ã»ÓĞ¸øÎÄ¼şÃû×Ö£¬ÔòËæ»ú·ÖÅäÈ¨ÖØ
+	if (fileName.empty())			//æ²¡æœ‰ç»™æ–‡ä»¶åå­—ï¼Œåˆ™éšæœºåˆ†é…æƒé‡
 	{
 		srand((unsigned)time(NULL));
-		//Ëæ»ú·ÖÅäÈ¨ÖØÒÔ¼°Æ«Ïò
-		//µÚÒ»²ãÎªÊäÈë²ã£¬²»·ÖÅä
+		//éšæœºåˆ†é…æƒé‡ä»¥åŠåå‘
+		//ç¬¬ä¸€å±‚ä¸ºè¾“å…¥å±‚ï¼Œä¸åˆ†é…
 		
-		for (int i = 1; i < num_layers; i++)//ÍøÂçÃ¿²ãµÄÑ­»· 
+		for (int i = 1; i < num_layers; i++)//ç½‘ç»œæ¯å±‚çš„å¾ªç¯ 
 		{
-			//Ã¿Ò»²ãµÄËùÓĞÉñ¾­ÔªµÄÈ¨ÖØ¶¼ÊÇÉÏÒ»²ãËùÓĞÉñ¾­ÔªµÄ¸öÊı£¬¼´Èô±¾²ãÉñ¾­ÔªÎªn¸ö£¬ÉÏ²ãÎªm¸ö£¬
-			//¹¹³Én*mµÄ¾ØÕó£¬Í¨µÀÎª1
+			//æ¯ä¸€å±‚çš„æ‰€æœ‰ç¥ç»å…ƒçš„æƒé‡éƒ½æ˜¯ä¸Šä¸€å±‚æ‰€æœ‰ç¥ç»å…ƒçš„ä¸ªæ•°ï¼Œå³è‹¥æœ¬å±‚ç¥ç»å…ƒä¸ºnä¸ªï¼Œä¸Šå±‚ä¸ºmä¸ªï¼Œ
+			//æ„æˆn*mçš„çŸ©é˜µï¼Œé€šé“ä¸º1
 			Matrix a(layers.at<int>(0, i), layers.at<int>(0, i - 1), MAT_64FC1);
-			//³õÊ¼»¯È¨ÖØ¾ØÕó£¬ĞĞÎªµ±Ç°²ãµÄÉñ¾­Ôª£¬ÁĞÎªÉÏÒ»²ãµÄÉñ¾­Ôª
+			//åˆå§‹åŒ–æƒé‡çŸ©é˜µï¼Œè¡Œä¸ºå½“å‰å±‚çš„ç¥ç»å…ƒï¼Œåˆ—ä¸ºä¸Šä¸€å±‚çš„ç¥ç»å…ƒ
 			a.InitMatData(layers.at<int>(0, i - 1));
 			weights.push_back(a);
-			//³õÊ¼»¯Æ«Ïò
-			//Ã¿Ò»²ãµÄÆ«Ïò¶¼ÊÇ±¾²ãÉñ¾­ÔªµÄ¸öÊı
+			//åˆå§‹åŒ–åå‘
+			//æ¯ä¸€å±‚çš„åå‘éƒ½æ˜¯æœ¬å±‚ç¥ç»å…ƒçš„ä¸ªæ•°
 			ColVector b(layers.at<int>(0, i), MAT_64FC1);
 			b.InitMatData();
 			biases.push_back(b);
@@ -112,26 +112,28 @@ void NeuralNetwork::loadImageAndLabel(std::vector<Matrix>& data, std::string fil
 		for (int i = 0; i < number_of_label; i++)
 		{
 			unsigned char label = 0;
-			file_label.read((char*)&label, sizeof(label));		//¶ÁÈ¡±êÇ©
+			file_label.read((char*)&label, sizeof(label));		//è¯»å–æ ‡ç­¾
 			
-			//Matrix temp(n_rows, n_cols, MAT_64FC1);				//´´½¨¾ØÕó
-			Matrix temp(1, n_cols*n_rows, MAT_64FC1);			//´´½¨¾ØÕó,ÕâÀïÎªÁËºóĞø·½±ã£¬Ñ¡ÓÃµ¥ĞĞµÄ¾ØÕó
-			temp.lables = label;								//Ğ´Èë±êÇ©
+			//Matrix temp(n_rows, n_cols, MAT_64FC1);				//åˆ›å»ºçŸ©é˜µ
+			Matrix temp(1, n_cols*n_rows, MAT_64FC1);			//åˆ›å»ºçŸ©é˜µ,è¿™é‡Œä¸ºäº†åç»­æ–¹ä¾¿ï¼Œé€‰ç”¨å•è¡Œçš„çŸ©é˜µ
+			temp.lables = label;								//å†™å…¥æ ‡ç­¾
 			for (int r = 0; r < n_rows; r++)
 			{
 				for (int c = 0; c < n_cols; c++)
 				{
 					unsigned char image = 0;
-					file_image.read((char*)&image, sizeof(image));//¶ÁÈ¡Êı¾İ
+					file_image.read((char*)&image, sizeof(image));//è¯»å–æ•°æ®
 					//tp.push_back((double)image / 255.0);
 					temp.at<double>(0, r*n_cols + c) = (double)image / 255.0;
-					//*(double*)(temp.data + r * n_cols*1*sizeof(double) + c * 1 * sizeof(double)) = (double)image / 255.0;//Ğ´ÈëÊı¾İ
+					//*(double*)(temp.data + r * n_cols*1*sizeof(double) + c * 1 * sizeof(double)) = (double)image / 255.0;//å†™å…¥æ•°æ®
 				}
 			}
-			data.push_back(temp);		//¼ÓÈë¼¯ºÏ
+			data.push_back(temp);		//åŠ å…¥é›†åˆ
 		}
 	}
-
+  else {
+    cout << "è¯»å–æ•°æ®æ–‡ä»¶å‡ºé”™ï¼Œæ£€æŸ¥æ–‡ä»¶è·¯å¾„" << endl;
+  }
 }
 
 void NeuralNetwork::SGD(std::vector<Matrix> training_data, std::vector<Matrix> evaluation_data, double epochs, double mini_batch_size, double learning_rate, double lmbda, bool monitor_evaluation_cost, bool monitor_evaluation_accuracy, bool monitor_training_cost, bool monitor_training_accuracy)
@@ -140,12 +142,12 @@ void NeuralNetwork::SGD(std::vector<Matrix> training_data, std::vector<Matrix> e
 	unsigned int n = training_data.size();
 	for (int i = 0; i < epochs; i++)
 	{
-		random_shuffle(training_data.begin(), training_data.end());		//´òÂÒÔªËØË³Ğò
+		random_shuffle(training_data.begin(), training_data.end());		//æ‰“ä¹±å…ƒç´ é¡ºåº
 		for (int j = 0; j < n; j += mini_batch_size)
 		{
 			if (j + mini_batch_size < n)
 			{
-				vector<Matrix>::iterator i1 = training_data.begin() + j, i2 = training_data.begin() + j+ mini_batch_size; //Ñ¡È¡²¿·ÖÊı¾İ½øĞĞÑµÁ·
+				vector<Matrix>::iterator i1 = training_data.begin() + j, i2 = training_data.begin() + j+ mini_batch_size; //é€‰å–éƒ¨åˆ†æ•°æ®è¿›è¡Œè®­ç»ƒ
 				vector<Matrix>mini_batch(i1, i2);
 				update_mini_batch(mini_batch, learning_rate, lmbda, n);
 			}
@@ -183,7 +185,7 @@ void NeuralNetwork::update_mini_batch(std::vector<Matrix>& mini_batch, double le
 	std::vector<Matrix> delta_nabla_w ;
 	std::vector<Matrix> nabla_b;
 	std::vector<Matrix> delta_nabla_b;
-	//³õÊ¼»¯Îª0
+	//åˆå§‹åŒ–ä¸º0
 	for (int j = 0; j < weights.size(); j++)
 	{
 		Matrix t_w(weights[j], 0);
@@ -203,12 +205,12 @@ void NeuralNetwork::update_mini_batch(std::vector<Matrix>& mini_batch, double le
 		backprop(mini_batch[i], delta_nabla_w, delta_nabla_b);
 		for (int j = 0; j < nabla_w.size(); j++)
 		{
-			nabla_w[j] = nabla_w[j] + delta_nabla_w[j];		//¼ÇÂ¼Ã¿Ò»´ÎµÄÆ«µ¼ÊıµÄºÍ
+			nabla_w[j] = nabla_w[j] + delta_nabla_w[j];		//è®°å½•æ¯ä¸€æ¬¡çš„åå¯¼æ•°çš„å’Œ
 			nabla_b[j] = nabla_b[j] + delta_nabla_b[j];
 		}
 	}
 
-	for (int j = 0; j < nabla_w.size(); j++)			//¸üĞÂÈ¨ÖØºÍÆ«Ïò
+	for (int j = 0; j < nabla_w.size(); j++)			//æ›´æ–°æƒé‡å’Œåå‘
 	{
 		weights[j] = ((1 - learning_rate * (lmbda / n))*weights[j]) + ((-learning_rate / mini_batch.size())*nabla_w[j]);
 		biases[j] = biases[j] + ((-learning_rate / mini_batch.size())*nabla_b[j]);
@@ -219,21 +221,21 @@ void NeuralNetwork::update_mini_batch(std::vector<Matrix>& mini_batch, double le
 
 void NeuralNetwork::backprop(Matrix input, std::vector<Matrix> &nabla_w, std::vector<Matrix> &nabla_b)
 {
-	Matrix activation = input.transpose();	//µ±Ç°Òª³ËµÄa£¬Ò²¾ÍÊÇÉÏ²ãµÄÊä³ö    ÊäÈëÊÇĞĞÏòÁ¿£¬ÕâÀï¸Ä³ÉÁĞ
-	std::vector<Matrix> activations;	//ËùÓĞ²ãµÄa
-	std::vector<Matrix> zs;				//ËùÓĞ²ãµÄz
-	activations.push_back(activation);		//ÏÈ¼ÓÈëÒ»²ãa
-	//ÕıÏò´«µİ
-	for (int i = 1; i < layers.cols; i++)	//Ã¿²ãµÄÔËËã,³ıÈ¥µÚÒ»²ã
+	Matrix activation = input.transpose();	//å½“å‰è¦ä¹˜çš„aï¼Œä¹Ÿå°±æ˜¯ä¸Šå±‚çš„è¾“å‡º    è¾“å…¥æ˜¯è¡Œå‘é‡ï¼Œè¿™é‡Œæ”¹æˆåˆ—
+	std::vector<Matrix> activations;	//æ‰€æœ‰å±‚çš„a
+	std::vector<Matrix> zs;				//æ‰€æœ‰å±‚çš„z
+	activations.push_back(activation);		//å…ˆåŠ å…¥ä¸€å±‚a
+	//æ­£å‘ä¼ é€’
+	for (int i = 1; i < layers.cols; i++)	//æ¯å±‚çš„è¿ç®—,é™¤å»ç¬¬ä¸€å±‚
 	{
-		Matrix current_z;//Ã¿²ãÓĞ¶àÉÙÉñ¾­Ôª£¬¾ÍÓĞ¶àÉÙzºÍactivation
+		Matrix current_z;//æ¯å±‚æœ‰å¤šå°‘ç¥ç»å…ƒï¼Œå°±æœ‰å¤šå°‘zå’Œactivation
 		current_z = Matrix_Multiplication(weights[i - 1], activation) + biases[i - 1];	
-		zs.push_back(current_z);//±¾²ãµÄz¼ÓÈëËùÓĞµÄz
-		activation = this->activation_matrix(current_z);		//¼ÆËã¼¤»îº¯ÊıÖµ
-		activations.push_back(activation);//±¾²ãµÄa¼ÓÈëËùÓĞµÄa
+		zs.push_back(current_z);//æœ¬å±‚çš„zåŠ å…¥æ‰€æœ‰çš„z
+		activation = this->activation_matrix(current_z);		//è®¡ç®—æ¿€æ´»å‡½æ•°å€¼
+		activations.push_back(activation);//æœ¬å±‚çš„aåŠ å…¥æ‰€æœ‰çš„a
 	}
 
-	//±êÇ©ÏòÁ¿»¯
+	//æ ‡ç­¾å‘é‡åŒ–
 	Matrix y(layers.at<int>(0,layers.getLength()-1) , 1, MAT_64FC1);
 	for (int i = 0; i < y.rows; i++)
 	{
@@ -242,17 +244,17 @@ void NeuralNetwork::backprop(Matrix input, std::vector<Matrix> &nabla_w, std::ve
 			y.at<double>(i, 0) = 1;
 	}
 
-	Matrix delta = this->cost->delta(zs[zs.size() - 1], activations[activations.size() - 1], y);	//µ±Ç°Îó²î£¬³õÊ¼»¯Îª×îºóÒ»²ãµÄÎó²î£¬Ê¹ÓÃ½»²æìØ´ú¼Ûº¯Êı
-	nabla_b[nabla_b.size() - 1] = delta;			//×îºóÒ»²ãµÄÆ«ÏòµÄÆ«µ¼Êı¾ÍÊÇ×îºóÒ»²ãµÄÎó²î
-	nabla_w[nabla_w.size() - 1] = Matrix_Multiplication(delta, activations[activations.size() - 2].transpose());//×îºóÒ»²ãµÄÈ¨ÖØÊÇ±¾²ãÎó²î³ËÒÔÉÏÒ»²ã¼¤»îº¯ÊıÖµ
+	Matrix delta = this->cost->delta(zs[zs.size() - 1], activations[activations.size() - 1], y);	//å½“å‰è¯¯å·®ï¼Œåˆå§‹åŒ–ä¸ºæœ€åä¸€å±‚çš„è¯¯å·®ï¼Œä½¿ç”¨äº¤å‰ç†µä»£ä»·å‡½æ•°
+	nabla_b[nabla_b.size() - 1] = delta;			//æœ€åä¸€å±‚çš„åå‘çš„åå¯¼æ•°å°±æ˜¯æœ€åä¸€å±‚çš„è¯¯å·®
+	nabla_w[nabla_w.size() - 1] = Matrix_Multiplication(delta, activations[activations.size() - 2].transpose());//æœ€åä¸€å±‚çš„æƒé‡æ˜¯æœ¬å±‚è¯¯å·®ä¹˜ä»¥ä¸Šä¸€å±‚æ¿€æ´»å‡½æ•°å€¼
 
-	//·´Ïò´«µİ
+	//åå‘ä¼ é€’
 	for (int i = 2; i < num_layers; i++)
 	{
 		Matrix current_z;
-		current_z = zs[zs.size() - i];		//µ¹×ÅÀ´Ëã  Ê×ÏÈ¼ÆËãz
-		Matrix sp = this->activation_deriv_matrix(current_z);	//È»ºó¸ù¾İz¼ÆËã¼¤»îº¯ÊıÆ«µ¼
-		delta = Matrix_Multiplication(weights[weights.size() - i + 1].transpose(), delta)*sp;  //ÏÂ²ãÈ¨ÖØºÍÎó²îµÄ³Ë»ıÔÚºÍsp¶ÔÓ¦Ïà³Ë¾ÍÊÇ±¾²ãÈ¨ÖØ
+		current_z = zs[zs.size() - i];		//å€’ç€æ¥ç®—  é¦–å…ˆè®¡ç®—z
+		Matrix sp = this->activation_deriv_matrix(current_z);	//ç„¶åæ ¹æ®zè®¡ç®—æ¿€æ´»å‡½æ•°åå¯¼
+		delta = Matrix_Multiplication(weights[weights.size() - i + 1].transpose(), delta)*sp;  //ä¸‹å±‚æƒé‡å’Œè¯¯å·®çš„ä¹˜ç§¯åœ¨å’Œspå¯¹åº”ç›¸ä¹˜å°±æ˜¯æœ¬å±‚æƒé‡
 		nabla_b[nabla_b.size() - i] = delta;
 		nabla_w[nabla_w.size() - i] = Matrix_Multiplication(delta, activations[activations.size() - i - 1].transpose());
 	}
@@ -294,10 +296,10 @@ double NeuralNetwork::total_cost(std::vector<Matrix>& data, double lmbda)
 	cost += sum * 0.5*(lmbda / data.size());
 	return cost;
 }
-//Ç°Ïò´«µİ
+//å‰å‘ä¼ é€’
 Matrix NeuralNetwork::feedforward(Matrix X)
 {
-	Matrix a = X.transpose();			//ÊäÈëxÊÇĞĞÏòÁ¿£¬ÕâÒª×ª»»ÎªÁĞ
+	Matrix a = X.transpose();			//è¾“å…¥xæ˜¯è¡Œå‘é‡ï¼Œè¿™è¦è½¬æ¢ä¸ºåˆ—
 	for (int i = 0; i < weights.size(); i++)
 	{
 		a = this->activation_matrix(Matrix_Multiplication(weights[i], a) + biases[i]);
@@ -354,44 +356,44 @@ bool NeuralNetwork::LoadNetworkStructure(std::string fileName)
 	//fp = fopen(fileName.c_str(), "rb");
 	//if (fp == 0)
 	//	return false;
-	//std::vector<std::vector<std::vector<double>>>().swap(this->weights);			//Çå³ı²¢ÊÍ·ÅÔ­ÓĞÄÚ´æ
-	//for (int i = 0; i < layers.size() - 1; i++)//Ã¿²ãµÄÑ­»·
+	//std::vector<std::vector<std::vector<double>>>().swap(this->weights);			//æ¸…é™¤å¹¶é‡Šæ”¾åŸæœ‰å†…å­˜
+	//for (int i = 0; i < layers.size() - 1; i++)//æ¯å±‚çš„å¾ªç¯
 	//{
 	//	std::vector<std::vector<double>> currentLayer;
-	//	//³ıÊäÈë²ãÍâÃ¿²ãÃ¿¸öÉñ¾­Ôª¶¼Òª·ÖÅä£¬Êµ¼Ê·ÖÅäµÄ²ã´Ólayers[1]¿ªÊ¼
-	//	for (int j = 0; j < layers[i + 1]; j++)	//µ±Ç°²ãµÄÃ¿¸öÉñ¾­ÔªµÄÑ­»·
+	//	//é™¤è¾“å…¥å±‚å¤–æ¯å±‚æ¯ä¸ªç¥ç»å…ƒéƒ½è¦åˆ†é…ï¼Œå®é™…åˆ†é…çš„å±‚ä»layers[1]å¼€å§‹
+	//	for (int j = 0; j < layers[i + 1]; j++)	//å½“å‰å±‚çš„æ¯ä¸ªç¥ç»å…ƒçš„å¾ªç¯
 	//	{
 	//		std::vector<double> currentNode;
-	//		for (int k = 0; k < layers[i]; k++)//µ±Ç°µÄÈ¨ÖØµÄÊıÁ¿ÊÇÉÏÒ»²ãÉñ¾­ÔªµÄ¸öÊı
+	//		for (int k = 0; k < layers[i]; k++)//å½“å‰çš„æƒé‡çš„æ•°é‡æ˜¯ä¸Šä¸€å±‚ç¥ç»å…ƒçš„ä¸ªæ•°
 	//		{
 	//			double temp;
 	//			fread(&temp, sizeof(double), 1, fp);
-	//			currentNode.push_back(temp);			//¶ÁÈ¡È¨ÖØ²¢¼ÇÂ¼
+	//			currentNode.push_back(temp);			//è¯»å–æƒé‡å¹¶è®°å½•
 	//		}
 	//		double temp;
 	//		fread(&temp, sizeof(double), 1, fp);
-	//		currentNode.push_back(temp);//×îºóËæ»úÆ«Ïò
-	//		currentLayer.push_back(currentNode);//±¾µã¼ÓÈë±¾²ã
+	//		currentNode.push_back(temp);//æœ€åéšæœºåå‘
+	//		currentLayer.push_back(currentNode);//æœ¬ç‚¹åŠ å…¥æœ¬å±‚
 	//	}
-	//	weights.push_back(currentLayer);//±¾²ãÈ¨ÖØĞ´Èë
+	//	weights.push_back(currentLayer);//æœ¬å±‚æƒé‡å†™å…¥
 	//}
 
 	FILE *fp;
 	fp = fopen(fileName.c_str(), "rb");
 	if (fp == 0)
 		return false;
-	std::vector<Matrix>().swap(this->weights);			//Çå³ı²¢ÊÍ·ÅÔ­ÓĞÄÚ´æ
-	std::vector<Matrix>().swap(this->biases);			//Çå³ı²¢ÊÍ·ÅÔ­ÓĞÄÚ´æ
+	std::vector<Matrix>().swap(this->weights);			//æ¸…é™¤å¹¶é‡Šæ”¾åŸæœ‰å†…å­˜
+	std::vector<Matrix>().swap(this->biases);			//æ¸…é™¤å¹¶é‡Šæ”¾åŸæœ‰å†…å­˜
 	fread(&num_layers, sizeof(int), 1, fp);
 	fread(layers.data, sizeof(int), num_layers, fp);
 	for (int i = 1; i < num_layers; i++)
 	{
 		Matrix a(layers.at<int>(0, i), layers.at<int>(0, i - 1), MAT_64FC1);
-		//³õÊ¼»¯È¨ÖØ¾ØÕó£¬ĞĞÎªµ±Ç°²ãµÄÉñ¾­Ôª£¬ÁĞÎªÉÏÒ»²ãµÄÉñ¾­Ôª
+		//åˆå§‹åŒ–æƒé‡çŸ©é˜µï¼Œè¡Œä¸ºå½“å‰å±‚çš„ç¥ç»å…ƒï¼Œåˆ—ä¸ºä¸Šä¸€å±‚çš„ç¥ç»å…ƒ
 		fread(a.data, sizeof(uchar), a.total(), fp);
 		weights.push_back(a);
-		//³õÊ¼»¯Æ«Ïò
-		//Ã¿Ò»²ãµÄÆ«Ïò¶¼ÊÇ±¾²ãÉñ¾­ÔªµÄ¸öÊı
+		//åˆå§‹åŒ–åå‘
+		//æ¯ä¸€å±‚çš„åå‘éƒ½æ˜¯æœ¬å±‚ç¥ç»å…ƒçš„ä¸ªæ•°
 		ColVector b(layers.at<int>(0, i), MAT_64FC1);
 		fread(b.data, sizeof(uchar), b.total(), fp);
 		biases.push_back(b);
@@ -406,7 +408,7 @@ double logistic(double x)
 	return (double)1 / (1 + exp(-x));
 
 }
-//¶Ô¾ØÕó×ö·ÇÏßĞÔ×ª»»
+//å¯¹çŸ©é˜µåšéçº¿æ€§è½¬æ¢
 Matrix logistic_Matrix( Matrix x)
 {
 	Matrix result(x.rows, x.cols, x.flag);

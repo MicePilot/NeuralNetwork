@@ -21,7 +21,7 @@ CrossEntropyCost::CrossEntropyCost()
 {
 }
 
-//¼ÆËã½»²æìØËğÊ§
+//è®¡ç®—äº¤å‰ç†µæŸå¤±
 double CrossEntropyCost::fn(Matrix a, Matrix y)
 {
 	double sum = 0;
@@ -48,10 +48,10 @@ double CrossEntropyCost::fn(Matrix a, Matrix y)
 	return sum;
 }
 
-//ÏòÁ¿¼ÆËã
+//å‘é‡è®¡ç®—
 Matrix CrossEntropyCost::delta(Matrix z, Matrix a, Matrix y)
 {
-	//Ã¿´Î²Ù×÷µÄ¾ØÕó½öÓĞÒ»ÁĞ
+	//æ¯æ¬¡æ“ä½œçš„çŸ©é˜µä»…æœ‰ä¸€åˆ—
 	Matrix result( a.rows,1, MAT_64FC1);
 	for (int i = 0; i < a.rows; i++)
 	{

@@ -3,7 +3,7 @@
 
 
 #define BAREMACHINE 1
-//¶¨Òå¶ÔµØÖ·Ô­×Ó²Ù×÷µÄºê£¬ÊÊÓÃÓÚunsigned intÖ¸ÕëµÄÔ­×Ó²Ù×÷
+//å®šä¹‰å¯¹åœ°å€åŸå­æ“ä½œçš„å®ï¼Œé€‚ç”¨äºunsigned intæŒ‡é’ˆçš„åŸå­æ“ä½œ
 #ifdef BAREMACHINE
 	#define MAT_XADD(addr, delta) ((*(unsigned int volatile*)addr)=(*(unsigned int volatile*)addr)+delta)
 #elif _WIN32	
@@ -11,29 +11,29 @@
 #endif // OS
 
 
-//flag 0-2 bit:Êı¾İÉî¶È Ò²ÊÇ¾ÍÊÇÊı¾İÀàĞÍ 000 MAT_8U
+//flag 0-2 bit:æ•°æ®æ·±åº¦ ä¹Ÿæ˜¯å°±æ˜¯æ•°æ®ç±»å‹ 000 MAT_8U
 //						    			 001 MAT_8S
 //										 011 MAT_16U
 //										 100 MAT_16S
 //										 101 MAT_32S
 //										 110 MAT_32F
 //										 111 MAT_64F
-//	   3-11 bit:Í¨µÀÊı ×î¸ß512
+//	   3-11 bit:é€šé“æ•° æœ€é«˜512
 
 #define MAT_CN_MAX 512
-#define MAT_CN_SHIFT 3      //ÓÉÓÚÉî¶ÈÊÇÓÉÈı¸öÎ»±íÊ¾µÄ£¬ÕâÀïÉèÖÃÎª3¼´100
+#define MAT_CN_SHIFT 3      //ç”±äºæ·±åº¦æ˜¯ç”±ä¸‰ä¸ªä½è¡¨ç¤ºçš„ï¼Œè¿™é‡Œè®¾ç½®ä¸º3å³100
 
-#define MAT_DEPTH_MAX  (1 << MAT_CN_SHIFT)	//×óÒÆÈıÎ»£¬×î´óÎ»Éî±êÊ¶¼ÓÒ»
+#define MAT_DEPTH_MAX  (1 << MAT_CN_SHIFT)	//å·¦ç§»ä¸‰ä½ï¼Œæœ€å¤§ä½æ·±æ ‡è¯†åŠ ä¸€
 #define MAT_DEPTH_MASK       (MAT_DEPTH_MAX - 1)
-#define MAT_DEPTH(flags)     ((flags) & MAT_DEPTH_MASK)  //¸ù¾İflag²âÊÔÎ»Éî£¬¼´»ñµÃÊı¾İÀàĞÍ
+#define MAT_DEPTH(flags)     ((flags) & MAT_DEPTH_MASK)  //æ ¹æ®flagæµ‹è¯•ä½æ·±ï¼Œå³è·å¾—æ•°æ®ç±»å‹
 
-#define MAT_MAKETYPE(depth,cn) (MAT_DEPTH(depth) + (((cn)-1) << MAT_CN_SHIFT))//ÖÆÔì´øÍ¨µÀµÄÊı¾İÀàĞÍ
+#define MAT_MAKETYPE(depth,cn) (MAT_DEPTH(depth) + (((cn)-1) << MAT_CN_SHIFT))//åˆ¶é€ å¸¦é€šé“çš„æ•°æ®ç±»å‹
 
 #define MAT_CHANNELS_MASK ((MAT_CN_MAX-1) << MAT_CN_SHIFT)
-#define MAT_CHANNELS(flags)	 ((((flags) & MAT_CHANNELS_MASK )>> MAT_CN_SHIFT)+1)	//¸ù¾İflag²âÊÔÍ¨µÀ£¬ÕâÀïÖ±½Ó»ñµÃÍ¨µÀ¾ßÌåÖµ
+#define MAT_CHANNELS(flags)	 ((((flags) & MAT_CHANNELS_MASK )>> MAT_CN_SHIFT)+1)	//æ ¹æ®flagæµ‹è¯•é€šé“ï¼Œè¿™é‡Œç›´æ¥è·å¾—é€šé“å…·ä½“å€¼
 
 #define MAT_TYPE_MASK        (MAT_DEPTH_MAX*MAT_CN_MAX - 1)				
-#define MAT_TYPE(flags)      ((flags) & MAT_TYPE_MASK)			//ÀàĞÍ²âÊÔ£¬°üº¬Í¨µÀºÍÊı¾İÀàĞÍ
+#define MAT_TYPE(flags)      ((flags) & MAT_TYPE_MASK)			//ç±»å‹æµ‹è¯•ï¼ŒåŒ…å«é€šé“å’Œæ•°æ®ç±»å‹
 
 #define MAT_8UC1 MAT_MAKETYPE(MAT_8U,1)
 #define MAT_8UC2 MAT_MAKETYPE(MAT_8U,2)

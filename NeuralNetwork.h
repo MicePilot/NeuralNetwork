@@ -22,10 +22,10 @@ class NeuralNetwork
 public:
 	NeuralNetwork(RowVector &layers, std::string cost="CrossEntropy", std::string fileName="");
 	virtual ~NeuralNetwork();
-	//¶ÁÈ¡MNISTÊı¾İ ÕâÀïÎªÁË¼ò»¯£¬ÑéÖ¤¼¯¾ÍÊÇ²âÊÔ¼¯
+	//è¯»å–MNISTæ•°æ® è¿™é‡Œä¸ºäº†ç®€åŒ–ï¼ŒéªŒè¯é›†å°±æ˜¯æµ‹è¯•é›†
 	void loadMnistData(std::vector<Matrix> &training_data, std::vector<Matrix> &validation_data);
 	void loadImageAndLabel(std::vector<Matrix>& data, std::string fileNameImage, std::string fileNameLabel);
-	//Ëæ»úÌİ¶ÈÏÂ½µËã·¨
+	//éšæœºæ¢¯åº¦ä¸‹é™ç®—æ³•
 	void SGD(std::vector<Matrix> training_data, std::vector<Matrix> evaluation_data,
 		double epochs = 10000, double mini_batch_size = 10,
 		double learning_rate = 0.2, double lmbda = 0.0,
@@ -33,10 +33,10 @@ public:
 		bool monitor_evaluation_accuracy = false,
 		bool monitor_training_cost = false,
 		bool monitor_training_accuracy = false);
-	//ÑµÁ·Ğ¡Ñù±¾¼¯
+	//è®­ç»ƒå°æ ·æœ¬é›†
 	void update_mini_batch(std::vector<Matrix> &mini_batch, double learning_rate, double lmbda, double n);
 
-	//BackPropagationËã·¨ ·µ»Ø¼ÆËãµÃµ½wºÍbµÄÆ«µ¼Êı£¬ÒÔ±ã¸üĞÂÈ¨ÖØ
+	//BackPropagationç®—æ³• è¿”å›è®¡ç®—å¾—åˆ°wå’Œbçš„åå¯¼æ•°ï¼Œä»¥ä¾¿æ›´æ–°æƒé‡
 	void backprop(Matrix input, std::vector<Matrix> &nabla_w, std::vector<Matrix> &nabla_b);
 
 	double total_cost(std::vector<Matrix> &data, double lmbda);
@@ -45,15 +45,15 @@ public:
 
 	double accuracy(std::vector<Matrix> &data);
 	
-	std::vector<Matrix> weights;	//Ã¿²ãµÄÈ¨ÖØÊÇ¾ØÕó£¬ËùÓĞµÄÈ¨ÖØ×é³Évector
-	std::vector<Matrix> biases;	//Ã¿²ãµÄÆ«ÏòÊÇÁĞÏòÁ¿£¬ËùÓĞÆ«Ïò×é³Évector
-	RowVector layers;				//ÍøÂç½á¹¹ ĞĞÏòÁ¿
-	int num_layers;					//ÍøÂç²ãÊı
-	CostFunction *cost;				//´ú¼Ûº¯ÊıµÄÍ³Ò»½Ó¿Ú£¬Ğé»ùÀà
-	CrossEntropyCost CrossEntropy;	//½»²æìØ´ú¼Ûº¯Êı
-	QuadraticCost 	Quadratic;		//Æ½·½Îó²î´ú¼Ûº¯Êı
+	std::vector<Matrix> weights;	//æ¯å±‚çš„æƒé‡æ˜¯çŸ©é˜µï¼Œæ‰€æœ‰çš„æƒé‡ç»„æˆvector
+	std::vector<Matrix> biases;	//æ¯å±‚çš„åå‘æ˜¯åˆ—å‘é‡ï¼Œæ‰€æœ‰åå‘ç»„æˆvector
+	RowVector layers;				//ç½‘ç»œç»“æ„ è¡Œå‘é‡
+	int num_layers;					//ç½‘ç»œå±‚æ•°
+	CostFunction *cost;				//ä»£ä»·å‡½æ•°çš„ç»Ÿä¸€æ¥å£ï¼Œè™šåŸºç±»
+	CrossEntropyCost CrossEntropy;	//äº¤å‰ç†µä»£ä»·å‡½æ•°
+	QuadraticCost 	Quadratic;		//å¹³æ–¹è¯¯å·®ä»£ä»·å‡½æ•°
 
-	double (*activation)(double);			//Ö¸Ïò±¾ÀàµÄº¯Êı£¬ÕâÀïÊÇÍ³Ò»µÄµ÷ÓÃ½Ó¿Ú
+	double (*activation)(double);			//æŒ‡å‘æœ¬ç±»çš„å‡½æ•°ï¼Œè¿™é‡Œæ˜¯ç»Ÿä¸€çš„è°ƒç”¨æ¥å£
 	Matrix (*activation_matrix)(Matrix);
 	Matrix (*activation_deriv_matrix)(Matrix);
 	double (*activation_deriv)(double);
@@ -61,7 +61,7 @@ public:
 	
 	bool SaveNetworkStructure(std::string fileName = "cx.cxnn");
 	bool LoadNetworkStructure(std::string fileName = "cx.cxnn");
-	double interval_mapping(double O, double O_Max, double O_Min, double N_Max, double N_Min)	//Çø¼äÓ³Éä
+	double interval_mapping(double O, double O_Max, double O_Min, double N_Max, double N_Min)	//åŒºé—´æ˜ å°„
 	{
 		double N;
 		N = (N_Max - N_Min) / (O_Max - O_Min);

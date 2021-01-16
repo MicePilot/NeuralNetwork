@@ -2,16 +2,16 @@
 #define VEC_HPP
 
 #include "Matrix.hpp"
-//ĞĞÏòÁ¿
+//è¡Œå‘é‡
 class RowVector :public Matrix
 {
 public:
 	RowVector();
-	RowVector(const RowVector& m);		//¿½±´¹¹Ôìº¯Êı  Àà×÷Îª²ÎÊıÊ±Ò²Òªµ÷ÓÃ  ²ÎÊı±ØĞëÎªcosnt ·ñÔò¿ÉÄÜ±¨´íÀàÃ»ÓĞºÏÊÊµÄ¿½±´¹¹Ôìº¯Êı
-	RowVector(int cols, uint type);	//´´½¨Ò»¸öĞĞÏòÁ¿£¬²¢·ÖÅä¿Õ¼ä
+	RowVector(const RowVector& m);		//æ‹·è´æ„é€ å‡½æ•°  ç±»ä½œä¸ºå‚æ•°æ—¶ä¹Ÿè¦è°ƒç”¨  å‚æ•°å¿…é¡»ä¸ºcosnt å¦åˆ™å¯èƒ½æŠ¥é”™ç±»æ²¡æœ‰åˆé€‚çš„æ‹·è´æ„é€ å‡½æ•°
+	RowVector(int cols, uint type);	//åˆ›å»ºä¸€ä¸ªè¡Œå‘é‡ï¼Œå¹¶åˆ†é…ç©ºé—´
 	RowVector(int cols, uint type, void* data, size_t step = 0);
 	int getLength();
-	double& operator[](int cols);	//½öÊÊÓÃÓÚdouble
+	double& operator[](int cols);	//ä»…é€‚ç”¨äºdouble
 	virtual ~RowVector();
 };
 
@@ -19,16 +19,16 @@ public:
 
 
 
-//ÁĞÏòÁ¿
+//åˆ—å‘é‡
 class ColVector:public Matrix
 {
 public:
 	ColVector();
-	ColVector(const ColVector& m);		//¿½±´¹¹Ôìº¯Êı  Àà×÷Îª²ÎÊıÊ±Ò²Òªµ÷ÓÃ  ²ÎÊı±ØĞëÎªcosnt ·ñÔò¿ÉÄÜ±¨´íÀàÃ»ÓĞºÏÊÊµÄ¿½±´¹¹Ôìº¯Êı
-	ColVector(int rows, uint type);	//´´½¨Ò»¸öÁĞÏòÁ¿£¬²¢·ÖÅä¿Õ¼ä
+	ColVector(const ColVector& m);		//æ‹·è´æ„é€ å‡½æ•°  ç±»ä½œä¸ºå‚æ•°æ—¶ä¹Ÿè¦è°ƒç”¨  å‚æ•°å¿…é¡»ä¸ºcosnt å¦åˆ™å¯èƒ½æŠ¥é”™ç±»æ²¡æœ‰åˆé€‚çš„æ‹·è´æ„é€ å‡½æ•°
+	ColVector(int rows, uint type);	//åˆ›å»ºä¸€ä¸ªåˆ—å‘é‡ï¼Œå¹¶åˆ†é…ç©ºé—´
 	ColVector(int rows, uint type, void* data, size_t step = 0);
 	int getLength();
-	double & operator[](int rows);	//½öÊÊÓÃÓÚdouble
+	double & operator[](int rows);	//ä»…é€‚ç”¨äºdouble
 	virtual ~ColVector();
 
 private:

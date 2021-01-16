@@ -15,7 +15,7 @@ Matrix::Matrix(const Matrix & m)
 	step[0] = m.step[0];
 	step[1] = m.step[1];
 	CountOfQuote = m.CountOfQuote;
-	MAT_XADD(CountOfQuote, 1);		//ÒıÓÃ¼ÆÊıÆ÷¼Ó1	
+	MAT_XADD(CountOfQuote, 1);		//å¼•ç”¨è®¡æ•°å™¨åŠ 1	
 }
 
 Matrix::Matrix(const Matrix & m, int value)
@@ -24,11 +24,11 @@ Matrix::Matrix(const Matrix & m, int value)
 	this->cols = m.cols;
 	this->flag = m.flag;
 	this->dims = 2;
-	this->data = 0;					//ÏÈÉèÖÃÎª0£¬·ñÔòcreateº¯Êı»áÅĞ¶¨ÒÑ´æÔÚdataÇøÓò£¬½«²»ÔÙ·ÖÅä¿Õ¼ä
+	this->data = 0;					//å…ˆè®¾ç½®ä¸º0ï¼Œå¦åˆ™createå‡½æ•°ä¼šåˆ¤å®šå·²å­˜åœ¨dataåŒºåŸŸï¼Œå°†ä¸å†åˆ†é…ç©ºé—´
 	this->create();
 
-	step[1] = channels() * getSizeofElement();	//µÚ¶şÎ¬²½³¤
-	step[0] = step[1] * cols;		//µÚÒ»Î¬²½³¤
+	step[1] = channels() * getSizeofElement();	//ç¬¬äºŒç»´æ­¥é•¿
+	step[0] = step[1] * cols;		//ç¬¬ä¸€ç»´æ­¥é•¿
 
 	for (int i = 0; i < rows; i++)
 	{
@@ -74,11 +74,11 @@ Matrix::Matrix(int rows, int cols, uint type) :lables(-1)
 	this->cols = cols;
 	this->flag = type;
 	this->dims = 2;
-	this->data = 0;					//ÏÈÉèÖÃÎª0£¬·ñÔòcreateº¯Êı»áÅĞ¶¨ÒÑ´æÔÚdataÇøÓò£¬½«²»ÔÙ·ÖÅä¿Õ¼ä
+	this->data = 0;					//å…ˆè®¾ç½®ä¸º0ï¼Œå¦åˆ™createå‡½æ•°ä¼šåˆ¤å®šå·²å­˜åœ¨dataåŒºåŸŸï¼Œå°†ä¸å†åˆ†é…ç©ºé—´
 	this->create();
 
-	step[1] = channels() * getSizeofElement();	//µÚ¶şÎ¬²½³¤
-	step[0] = step[1] * cols;		//µÚÒ»Î¬²½³¤
+	step[1] = channels() * getSizeofElement();	//ç¬¬äºŒç»´æ­¥é•¿
+	step[0] = step[1] * cols;		//ç¬¬ä¸€ç»´æ­¥é•¿
 }
 
 Matrix::Matrix(int rows, int cols, uint type, void * data, size_t step):dims(0), lables(-1)
@@ -86,21 +86,21 @@ Matrix::Matrix(int rows, int cols, uint type, void * data, size_t step):dims(0),
 	this->rows = rows;
 	this->cols = cols;
 	this->flag = type;
-	this->data = 0;					//ÏÈÉèÖÃÎª0£¬·ñÔòcreateº¯Êı»áÅĞ¶¨ÒÑ´æÔÚdataÇøÓò£¬½«²»ÔÙ·ÖÅä¿Õ¼ä
+	this->data = 0;					//å…ˆè®¾ç½®ä¸º0ï¼Œå¦åˆ™createå‡½æ•°ä¼šåˆ¤å®šå·²å­˜åœ¨dataåŒºåŸŸï¼Œå°†ä¸å†åˆ†é…ç©ºé—´
 	this->create();
 
-	this->step[1] = channels() * getSizeofElement();	//µÚ¶şÎ¬²½³¤
-	this->step[0] = this->step[1] * this->cols;		//µÚÒ»Î¬²½³¤
-	memcpy(this->data, data, this->total());		//¸Ãdataµ¥ÔªĞèÒªÍâ²¿ÊÍ·Å
+	this->step[1] = channels() * getSizeofElement();	//ç¬¬äºŒç»´æ­¥é•¿
+	this->step[0] = this->step[1] * this->cols;		//ç¬¬ä¸€ç»´æ­¥é•¿
+	memcpy(this->data, data, this->total());		//è¯¥dataå•å…ƒéœ€è¦å¤–éƒ¨é‡Šæ”¾
 }
 
 Matrix::~Matrix()
 {
 	if (this->CountOfQuote != 0)
 	{
-		if ((MAT_XADD(this->CountOfQuote,-1)) == 0)		//ÒıÓÃ¼ÆÊıÆ÷¼õÒ»ºóÅĞ¶¨ÊÇ·ñÎª×îºóÒ»¸öÒıÓÃ£¬ÈôÊÇ
+		if ((MAT_XADD(this->CountOfQuote,-1)) == 0)		//å¼•ç”¨è®¡æ•°å™¨å‡ä¸€ååˆ¤å®šæ˜¯å¦ä¸ºæœ€åä¸€ä¸ªå¼•ç”¨ï¼Œè‹¥æ˜¯
 		{
-			delete[] this->datastart;			//ÊÍ·Å¿Õ¼ä    datastartÒ»¶¨ÊÇÔ­ÓĞµÄ¿Õ¼ä£¬±ÜÃâÁË×Ó¾ØÕóÊÇ×îºóÒ»¸öÒıÓÃ¶øÊÍ·Å¿Õ¼ä²»ÍêÕû
+			delete[] this->datastart;			//é‡Šæ”¾ç©ºé—´    datastartä¸€å®šæ˜¯åŸæœ‰çš„ç©ºé—´ï¼Œé¿å…äº†å­çŸ©é˜µæ˜¯æœ€åä¸€ä¸ªå¼•ç”¨è€Œé‡Šæ”¾ç©ºé—´ä¸å®Œæ•´
 			this->data = 0;
 			this->CountOfQuote = 0;
 		}
@@ -181,14 +181,14 @@ double Matrix::gaussrand_NORMAL()
 
 		phase = 1 - phase;
 
-		return X/6.0*0.25;// / 6.0;		//¾­¹ıÒ»ÒÚ´ÎÊµÑé£¬·Ö²¼ÔÚ-6~6Ö®¼ä£¬ÕâÀïÓ³Éäµ½-1~1
+		return X/6.0*0.25;// / 6.0;		//ç»è¿‡ä¸€äº¿æ¬¡å®éªŒï¼Œåˆ†å¸ƒåœ¨-6~6ä¹‹é—´ï¼Œè¿™é‡Œæ˜ å°„åˆ°-1~1
 
 }
 
 int Matrix::getSizeofElement()
 {
 	int num = MAT_DEPTH(this->flag);
-	//×¢Òâ´Ë´¦intµÄÎ»Êı¿ÉÄÜºÍfloatÒ»Ñù
+	//æ³¨æ„æ­¤å¤„intçš„ä½æ•°å¯èƒ½å’Œfloatä¸€æ ·
 	switch (num)
 	{
 	case MAT_8U:
@@ -231,16 +231,16 @@ size_t Matrix::total()
 
 void Matrix::create()
 {
-	if (this->data != 0)	//Ö¸ÏòÁË´æ´¢Çø
+	if (this->data != 0)	//æŒ‡å‘äº†å­˜å‚¨åŒº
 	{
 
 	}
-	else					//ĞèÒªÖØĞÂ·ÖÅä¿Õ¼äµÄ£¬ÒÑ¾­²»ÊÇ×Ó¾ØÕóÁË
+	else					//éœ€è¦é‡æ–°åˆ†é…ç©ºé—´çš„ï¼Œå·²ç»ä¸æ˜¯å­çŸ©é˜µäº†
 	{
-		this->datastart = this->data = new uchar[total() + 4];		//·ÖÅä¿Õ¼ä£¬×îºóµÄ4Îª¼ÆÊıÇø
-		this->CountOfQuote = (unsigned int*)(this->data + total());//Ê¹µÃ¼ÆÊıÖ¸ÕëÖ¸Ïò¼ÆÊıÇø
-		this->dataend = this->datalimit = (uchar*)(this->CountOfQuote); //½áÊøµØÖ·ÎªÓĞĞ§Êı¾İ¿Õ¼äµÄÏÂÒ»¸öµØÖ·
-		*(this->CountOfQuote) = 1;					//Ê×´Î´´½¨£¬ÉèÖÃ¼ÆÊıÆ÷ÎªÒ»
+		this->datastart = this->data = new uchar[total() + 4];		//åˆ†é…ç©ºé—´ï¼Œæœ€åçš„4ä¸ºè®¡æ•°åŒº
+		this->CountOfQuote = (unsigned int*)(this->data + total());//ä½¿å¾—è®¡æ•°æŒ‡é’ˆæŒ‡å‘è®¡æ•°åŒº
+		this->dataend = this->datalimit = (uchar*)(this->CountOfQuote); //ç»“æŸåœ°å€ä¸ºæœ‰æ•ˆæ•°æ®ç©ºé—´çš„ä¸‹ä¸€ä¸ªåœ°å€
+		*(this->CountOfQuote) = 1;					//é¦–æ¬¡åˆ›å»ºï¼Œè®¾ç½®è®¡æ•°å™¨ä¸ºä¸€
 	}
 }
 
@@ -293,11 +293,11 @@ Matrix Matrix::transpose()
 
 Matrix & Matrix::operator=(const Matrix & m)
 {
-	if (this->CountOfQuote != 0)		//ÒÑ´æÔÚÊı¾İ    ÕâÀïÖ÷ÒªÊÇÎªÁËÖØĞÂµ÷ÕûroiÊı¾İÇøÊ¹ÓÃ
+	if (this->CountOfQuote != 0)		//å·²å­˜åœ¨æ•°æ®    è¿™é‡Œä¸»è¦æ˜¯ä¸ºäº†é‡æ–°è°ƒæ•´roiæ•°æ®åŒºä½¿ç”¨
 	{
-		if ((MAT_XADD(CountOfQuote,-1)) == 0)		//ÒıÓÃ¼ÆÊıÆ÷¼õÒ»ºóÅĞ¶¨ÊÇ·ñÎª×îºóÒ»¸öÒıÓÃ£¬ÈôÊÇ
+		if ((MAT_XADD(CountOfQuote,-1)) == 0)		//å¼•ç”¨è®¡æ•°å™¨å‡ä¸€ååˆ¤å®šæ˜¯å¦ä¸ºæœ€åä¸€ä¸ªå¼•ç”¨ï¼Œè‹¥æ˜¯
 		{
-			destory();					//ÊÍ·Å¿Õ¼ä    
+			destory();					//é‡Šæ”¾ç©ºé—´    
 		}
 	}
 	flag = m.flag;
@@ -312,7 +312,7 @@ Matrix & Matrix::operator=(const Matrix & m)
 	step[0] = m.step[0];
 	step[1] = m.step[1];
 	CountOfQuote = m.CountOfQuote;
-	MAT_XADD(CountOfQuote, 1);			//ÒıÓÃ¼ÆÊıÆ÷¼Ó1
+	MAT_XADD(CountOfQuote, 1);			//å¼•ç”¨è®¡æ•°å™¨åŠ 1
 	return *this;
 }
 
@@ -378,11 +378,11 @@ double Matrix::norm()
 	}
 	return sqrt(sum);
 }
-//¾ØÕó³Ë·¨
+//çŸ©é˜µä¹˜æ³•
 Matrix Matrix_Multiplication(Matrix a, Matrix b)
 {
 
-	if (a.cols != b.rows)		//¾ØÕóÊÇ·ñ¿ÉÒÔÏà³ËµÄ¼ì²â   aµÄÁĞÊı±ØĞëµÈÓÚbµÄĞĞÊı
+	if (a.cols != b.rows)		//çŸ©é˜µæ˜¯å¦å¯ä»¥ç›¸ä¹˜çš„æ£€æµ‹   açš„åˆ—æ•°å¿…é¡»ç­‰äºbçš„è¡Œæ•°
 		return Matrix();
 	Matrix result(a.rows, b.cols, MAT_DEPTH(a.flag));
 
@@ -454,7 +454,7 @@ Matrix Matrix_Multiplication(Matrix a, Matrix b)
 	
 	return result;
 }
-//¾ØÕóÏà¼Ó
+//çŸ©é˜µç›¸åŠ 
 Matrix operator+(Matrix a, Matrix b)
 {
 	
@@ -499,7 +499,7 @@ Matrix operator+(Matrix a, Matrix b)
 
 	
 }
-//¾ØÕó¶ÔÓ¦ÔªËØÏà³Ë
+//çŸ©é˜µå¯¹åº”å…ƒç´ ç›¸ä¹˜
 Matrix operator*(Matrix a, Matrix b)
 {
 	if ((b.rows != a.rows) || (b.cols != a.cols))
@@ -545,7 +545,7 @@ Matrix operator*(Matrix a, Matrix b)
 	}
 	return output;
 }
-//Ò»¸öÊı³Ë¾ØÕó
+//ä¸€ä¸ªæ•°ä¹˜çŸ©é˜µ
 Matrix operator*(double a, Matrix b)
 {
 	Matrix output(b.rows, b.cols, b.flag);

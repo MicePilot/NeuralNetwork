@@ -11,14 +11,14 @@ typedef  unsigned int uint;
 #endif // !_WIN64
 
 //typedef  unsigned long size_t;
-//flag 0-2 bit:Êı¾İÉî¶È Ò²ÊÇ¾ÍÊÇÊı¾İÀàĞÍ 000 MAT_8U
+//flag 0-2 bit:æ•°æ®æ·±åº¦ ä¹Ÿæ˜¯å°±æ˜¯æ•°æ®ç±»å‹ 000 MAT_8U
 //						    			 001 MAT_8S
 //										 011 MAT_16U
 //										 100 MAT_16S
 //										 101 MAT_32S
 //										 110 MAT_32F
 //										 111 MAT_64F
-//	   3-11 bit:Í¨µÀÊı ×î¸ß512
+//	   3-11 bit:é€šé“æ•° æœ€é«˜512
 
 class Matrix
 {
@@ -28,53 +28,53 @@ public:
 		step[0] = 0;
 		step[1] = 0;
 	}
-	Matrix(const Matrix& m);		//¿½±´¹¹Ôìº¯Êı  Àà×÷Îª²ÎÊıÊ±Ò²Òªµ÷ÓÃ  ²ÎÊı±ØĞëÎªcosnt ·ñÔò¿ÉÄÜ±¨´íÀàÃ»ÓĞºÏÊÊµÄ¿½±´¹¹Ôìº¯Êı
-	Matrix(const Matrix& m, int value);//³õÊ¼»¯Ò»¸öºÍmÒ»ÑùµÄ¾ØÕó£¬³õÊ¼»¯µÄÖµÎªvalue
-	Matrix(int rows, int cols, uint type );	//´´½¨Ò»¸öMatrix£¬²¢·ÖÅä¿Õ¼ä
-	//´Ë¹¹Ôìº¯ÊıÊÇĞÂ¿ª±ÙÄÚ´æ²¢¸´ÖÆÁËdataµÄÄÚÈİ£¬ºóĞødataÓ¦µ±ÊÍ·Å
+	Matrix(const Matrix& m);		//æ‹·è´æ„é€ å‡½æ•°  ç±»ä½œä¸ºå‚æ•°æ—¶ä¹Ÿè¦è°ƒç”¨  å‚æ•°å¿…é¡»ä¸ºcosnt å¦åˆ™å¯èƒ½æŠ¥é”™ç±»æ²¡æœ‰åˆé€‚çš„æ‹·è´æ„é€ å‡½æ•°
+	Matrix(const Matrix& m, int value);//åˆå§‹åŒ–ä¸€ä¸ªå’Œmä¸€æ ·çš„çŸ©é˜µï¼Œåˆå§‹åŒ–çš„å€¼ä¸ºvalue
+	Matrix(int rows, int cols, uint type );	//åˆ›å»ºä¸€ä¸ªMatrixï¼Œå¹¶åˆ†é…ç©ºé—´
+	//æ­¤æ„é€ å‡½æ•°æ˜¯æ–°å¼€è¾Ÿå†…å­˜å¹¶å¤åˆ¶äº†dataçš„å†…å®¹ï¼Œåç»­dataåº”å½“é‡Šæ”¾
 	Matrix(int rows, int cols, uint type, void* data, size_t step = 0);
 	virtual ~Matrix();
-	uint flag;		//±êÖ¾£¬±êÊ¶Í¨µÀÊı¾İÀàĞÍµÈ
-	uchar dims;		//Î¬¶È   ÕâÀï×î´óÎª2
-	int rows;		//ĞĞÊı
-	int cols;		//ÁĞÊı
-	uchar *data;	//Êı¾İÇø			µ±Îª×Ó¾ØÕóÊ±£¬¸ÃÖ¸ÕëÖ¸Ïò×Ó¾ØÕóµÄÆğÊ¼µØÖ·
-	uchar *datastart;//Ô­Ê¼Êı¾İÇø       µ±Îª×Ó¾ØÕóÊ±£¬¸ÃÖ¸ÕëÖ¸ÏòÔ­ÓĞ¾ØÕóµÄÆğÊ¼µØÖ·
-	uchar *dataend; //Ö¸ÏòÔ­ÓĞ¾ØÕó½áÊøµØÖ·	Ö¸ÏòµÄÊÇÓĞĞ§Êı¾İ¿Õ¼äµÄÏÂÒ»¸öµØÖ·£¬ÈôÎªÕı³£¾ØÕó£¬Ö¸ÏòÒıÓÃ¼ÆÊıÇø
-	uchar *datalimit;//Ö¸Ïò×Ó¾ØÕó½áÊøµØÖ·
-	int step[2];	//×î¶àÎª¶şÎ¬µÄ¾ØÕó£¬Òò´Ë²½³¤½ö¶¨ÒåÁ½¸ö
-	unsigned int *CountOfQuote;//Ö¸ÏòÒıÓÃ¼ÆÊıÇø
-	int lables;		//±êÊ¶µ±Ç°Êı¾İ¶ÔÓ¦µÄ±êÇ©£¬ÈôÃ»ÓĞ¿ÉÒÔ¶¨ÒåÎª-1.
+	uint flag;		//æ ‡å¿—ï¼Œæ ‡è¯†é€šé“æ•°æ®ç±»å‹ç­‰
+	uchar dims;		//ç»´åº¦   è¿™é‡Œæœ€å¤§ä¸º2
+	int rows;		//è¡Œæ•°
+	int cols;		//åˆ—æ•°
+	uchar *data;	//æ•°æ®åŒº			å½“ä¸ºå­çŸ©é˜µæ—¶ï¼Œè¯¥æŒ‡é’ˆæŒ‡å‘å­çŸ©é˜µçš„èµ·å§‹åœ°å€
+	uchar *datastart;//åŸå§‹æ•°æ®åŒº       å½“ä¸ºå­çŸ©é˜µæ—¶ï¼Œè¯¥æŒ‡é’ˆæŒ‡å‘åŸæœ‰çŸ©é˜µçš„èµ·å§‹åœ°å€
+	uchar *dataend; //æŒ‡å‘åŸæœ‰çŸ©é˜µç»“æŸåœ°å€	æŒ‡å‘çš„æ˜¯æœ‰æ•ˆæ•°æ®ç©ºé—´çš„ä¸‹ä¸€ä¸ªåœ°å€ï¼Œè‹¥ä¸ºæ­£å¸¸çŸ©é˜µï¼ŒæŒ‡å‘å¼•ç”¨è®¡æ•°åŒº
+	uchar *datalimit;//æŒ‡å‘å­çŸ©é˜µç»“æŸåœ°å€
+	int step[2];	//æœ€å¤šä¸ºäºŒç»´çš„çŸ©é˜µï¼Œå› æ­¤æ­¥é•¿ä»…å®šä¹‰ä¸¤ä¸ª
+	unsigned int *CountOfQuote;//æŒ‡å‘å¼•ç”¨è®¡æ•°åŒº
+	int lables;		//æ ‡è¯†å½“å‰æ•°æ®å¯¹åº”çš„æ ‡ç­¾ï¼Œè‹¥æ²¡æœ‰å¯ä»¥å®šä¹‰ä¸º-1.
 
-	//³õÊ¼»¯È¨ÖØ£¬²ÎÊıÎªÉÏÒ»²ãÉñ¾­Ôª¸öÊı£¬¼´ÊäÈëµÄ¸öÊı£¬1/sqrt(Previous)×÷Îª±ê×¼²î£¬Ä¬ÈÏ1Îª±ê×¼²î,¼´³õÊ¼»¯Îª
-	//±ê×¼²îÎª1£¬¾ùÖµÎª0µÄ¸ßË¹Ëæ»ú
+	//åˆå§‹åŒ–æƒé‡ï¼Œå‚æ•°ä¸ºä¸Šä¸€å±‚ç¥ç»å…ƒä¸ªæ•°ï¼Œå³è¾“å…¥çš„ä¸ªæ•°ï¼Œ1/sqrt(Previous)ä½œä¸ºæ ‡å‡†å·®ï¼Œé»˜è®¤1ä¸ºæ ‡å‡†å·®,å³åˆå§‹åŒ–ä¸º
+	//æ ‡å‡†å·®ä¸º1ï¼Œå‡å€¼ä¸º0çš„é«˜æ–¯éšæœº
 	virtual void InitMatData(double Previous=0);
 	static double gaussrand_NORMAL();
-    int getSizeofElement();//»ñµÃÔªËØËùÕ¼µÄ×Ö½ÚÊı
-	uint channels();//Í¨µÀÊı
-	size_t total(); //»ñµÃ¾ØÕóËùÕ¼×Ü¿Õ¼ä µ¥Î»×Ö½Ú
-	void create();	//Êµ¼Ê´´½¨ĞÂµÄÄÚ´æÊ±ºòÊ¹ÓÃ
-	void destory();	//ÊÍ·ÅÄÚ´æ
-	void t();		//¾ØÕó×ªÖÃ£¬ÖØĞÂ·ÖÅäÄÚ´æ
-	Matrix transpose();	//¾ØÕó×ªÖÃ£¬·µ»ØĞÂ¾ØÕó
-	Matrix& operator=(const Matrix& m);//µÈºÅÖØÔØ
-	//ÒÔÏÂÁ½¸öº¯ÊıÖ»ÊÊºÏMAT_8UµÄÊı¾İÀàĞÍ
-	uchar GetPixelRGB(int rows, int cols, uint channel=0);	//»ñµÃÄ³µã´¦µÄÖµ£¬°´ÕÕBGR·½Ê½´æ·Å,Ä¬ÈÏ¶ÁÈ¡µÄÍ¨µÀÎª0
-	uchar* PixelRGBPointer(int rows, int cols, uint channel=0);//»òÕßÄ³µã´¦µÄÖ¸Õë£¬·½±ãĞ´ÈëÏñËØµã£¬Ä¬ÈÏ¶ÁÈ¡µÄÍ¨µÀÎª0
+    int getSizeofElement();//è·å¾—å…ƒç´ æ‰€å çš„å­—èŠ‚æ•°
+	uint channels();//é€šé“æ•°
+	size_t total(); //è·å¾—çŸ©é˜µæ‰€å æ€»ç©ºé—´ å•ä½å­—èŠ‚
+	void create();	//å®é™…åˆ›å»ºæ–°çš„å†…å­˜æ—¶å€™ä½¿ç”¨
+	void destory();	//é‡Šæ”¾å†…å­˜
+	void t();		//çŸ©é˜µè½¬ç½®ï¼Œé‡æ–°åˆ†é…å†…å­˜
+	Matrix transpose();	//çŸ©é˜µè½¬ç½®ï¼Œè¿”å›æ–°çŸ©é˜µ
+	Matrix& operator=(const Matrix& m);//ç­‰å·é‡è½½
+	//ä»¥ä¸‹ä¸¤ä¸ªå‡½æ•°åªé€‚åˆMAT_8Uçš„æ•°æ®ç±»å‹
+	uchar GetPixelRGB(int rows, int cols, uint channel=0);	//è·å¾—æŸç‚¹å¤„çš„å€¼ï¼ŒæŒ‰ç…§BGRæ–¹å¼å­˜æ”¾,é»˜è®¤è¯»å–çš„é€šé“ä¸º0
+	uchar* PixelRGBPointer(int rows, int cols, uint channel=0);//æˆ–è€…æŸç‚¹å¤„çš„æŒ‡é’ˆï¼Œæ–¹ä¾¿å†™å…¥åƒç´ ç‚¹ï¼Œé»˜è®¤è¯»å–çš„é€šé“ä¸º0
 	template<typename T>
-	T& at(int rows, int cols, uint channel = 0); //»ñÈ¡¾ØÕóÄ³´¦µÄÖµ
-	bool IsEmpty();		//ÅĞ¶ÏÊÇ·ñÎª¿Õ£¬ÕâÀï½ö¼ì²âÊÇ·ñ·ÖÅä¿Õ¼ä
-	Matrix row(int x);	//»ñµÃ¸ÃĞĞµÄÊı¾İ£¬Êµ¼ÊÎª×Ó¾ØÕó
-	Matrix col(int y);	//»ñµÃ¸ÃÁĞµÄÊı¾İ£¬Êµ¼ÊÎª×Ó¾ØÕó
-	Matrix reshape(int cn, int row = 0);	//ĞŞ¸Äµ±Ç°¾ØÕóµÄĞĞÁĞ£¬Êµ¼Ê¾ÍÊÇĞŞ¸Ästep¡¢row¡¢channelºÍcolµÄÖµ£¬×îºóµ÷ÕûºóµÄ¾ØÕóÓëÖ®Ç°µÄrow*col*channelÏàÍ¬£¬²ÎÊırowÄ¬ÈÏ²»ĞŞ¸Ä 
-	double norm();//Çó·¶Êı
+	T& at(int rows, int cols, uint channel = 0); //è·å–çŸ©é˜µæŸå¤„çš„å€¼
+	bool IsEmpty();		//åˆ¤æ–­æ˜¯å¦ä¸ºç©ºï¼Œè¿™é‡Œä»…æ£€æµ‹æ˜¯å¦åˆ†é…ç©ºé—´
+	Matrix row(int x);	//è·å¾—è¯¥è¡Œçš„æ•°æ®ï¼Œå®é™…ä¸ºå­çŸ©é˜µ
+	Matrix col(int y);	//è·å¾—è¯¥åˆ—çš„æ•°æ®ï¼Œå®é™…ä¸ºå­çŸ©é˜µ
+	Matrix reshape(int cn, int row = 0);	//ä¿®æ”¹å½“å‰çŸ©é˜µçš„è¡Œåˆ—ï¼Œå®é™…å°±æ˜¯ä¿®æ”¹stepã€rowã€channelå’Œcolçš„å€¼ï¼Œæœ€åè°ƒæ•´åçš„çŸ©é˜µä¸ä¹‹å‰çš„row*col*channelç›¸åŒï¼Œå‚æ•°rowé»˜è®¤ä¸ä¿®æ”¹ 
+	double norm();//æ±‚èŒƒæ•°
 };
 
 extern Matrix Matrix_Multiplication(Matrix a, Matrix b);
 extern Matrix operator+(Matrix a, Matrix b);
-//¾ØÕó¶ÔÓ¦ÔªËØÏà³Ë
+//çŸ©é˜µå¯¹åº”å…ƒç´ ç›¸ä¹˜
 extern Matrix operator*(Matrix a, Matrix b);
-//Ò»¸öÊı³ËÒÔ¾ØÕó
+//ä¸€ä¸ªæ•°ä¹˜ä»¥çŸ©é˜µ
 extern Matrix operator*(double a, Matrix b);
 template<typename T>
 inline T& Matrix::at(int rows, int cols, uint channel)
